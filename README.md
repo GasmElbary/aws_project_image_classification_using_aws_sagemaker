@@ -50,13 +50,29 @@ Each category is in a separate file.
 Upload the data to an S3 bucket through the AWS Gateway so that SageMaker has access to the data. 
 
 ## Hyperparameter Tuning
-What kind of model did you choose for this experiment and why? Give an overview of the types of parameters and their ranges used for the hyperparameter search
+The model I chose is EfficientNet-B7. EfficientNet models are known for achieving both higher accuracy and better efficiency over existing CNNs, resulting in reduced parameter size and, thus, better resource optimization. For example, efficientNet-B7 reaches state-of-the-art 84.4% top-1 accuracy on ImageNet while being 8.4x smaller and 6.1x faster on CPU inference. To compare, ResNet-50 achieved 76.3%  accuracy on ImageNet.
 
-Remember that your README should:
-- Include a screenshot of completed training jobs
-- Logs metrics during the training process
-- Tune at least two hyperparameters
-- Retrieve the best best hyperparameters from all your training jobs
+The hyperparameters I tuned are batch_size, epoch, learning rate, and epsilon. With the following ranges:
+batch_size = [128, 256, 512]
+epoch = [5, 7, 9]
+learning rate = (0.001 - 0.1)
+epsilon = (0.0000001 - 0.000001)
+I applied 6 different combinations to find the best model using SageMaker Hyperparameter tuning and Training jobs.
+
+![training_job.png](images/training_job.png)
+
+Meanwhile, I logged the results of training and testing jobs of every epoch.
+
+![logs.png](images/logs.png)
+
+The best parameters were:
+{'batch_size': 128,
+ 'epoch': 7,
+ 'lr': 0.00441805025436625,
+ 'eps': 3.253525993193129e-07}
+
+![best_parameters.png](images/best_parameters.png)
+
 
 ## Debugging and Profiling
 **TODO**: Give an overview of how you performed model debugging and profiling in Sagemaker
@@ -72,11 +88,9 @@ Remember that your README should:
 
 **TODO** Remember to provide a screenshot of the deployed active endpoint in Sagemaker.
 
-## Standout Suggestions
-**TODO (Optional):** This is where you can provide information about any standout suggestions that you have attempted.
+## References
 
-
-
+https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html
 https://github.com/aws/amazon-sagemaker-examples/blob/main/sagemaker-debugger/pytorch_model_debugging/pytorch_script_change_smdebug.ipynb
 https://sagemaker.readthedocs.io/en/stable/frameworks/pytorch/using_pytorch.html#load-a-model
 https://aws.amazon.com/blogs/machine-learning/create-amazon-sagemaker-models-using-the-pytorch-model-zoo/#:~:text=The%20entry_point%20parameter%20points%20to,SageMaker%20Deep%20Learning%20Container%20image
