@@ -53,10 +53,12 @@ Upload the data to an S3 bucket through the AWS Gateway so that SageMaker has ac
 The model I chose is EfficientNet-B7. EfficientNet models are known for achieving both higher accuracy and better efficiency over existing CNNs, resulting in reduced parameter size and, thus, better resource optimization. For example, efficientNet-B7 reaches state-of-the-art 84.4% top-1 accuracy on ImageNet while being 8.4x smaller and 6.1x faster on CPU inference. To compare, ResNet-50 achieved 76.3%  accuracy on ImageNet.
 
 The hyperparameters I tuned are batch_size, epoch, learning rate, and epsilon. With the following ranges:
-batch_size = [128, 256, 512]
-epoch = [5, 7, 9]
-learning rate = (0.001 - 0.1)
-epsilon = (0.0000001 - 0.000001)
+
+- batch_size = [128, 256, 512]
+- epoch = [5, 7, 9]
+-  learning rate = (0.001 - 0.1)
+- epsilon = (0.0000001 - 0.000001)
+
 I applied 6 different combinations to find the best model using SageMaker Hyperparameter tuning and Training jobs.
 
 ![training_job.png](images/training_job.png)
