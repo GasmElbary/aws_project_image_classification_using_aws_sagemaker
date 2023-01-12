@@ -132,6 +132,9 @@ To use the Predictor, we pass bytes of a JPEG image, and we get an array of loss
 ## References
 
 https://ai.googleblog.com/2019/05/efficientnet-improving-accuracy-and.html
+
 https://github.com/aws/amazon-sagemaker-examples/blob/main/sagemaker-debugger/pytorch_model_debugging/pytorch_script_change_smdebug.ipynb
+
 https://sagemaker.readthedocs.io/en/stable/frameworks/pytorch/using_pytorch.html#load-a-model
+
 https://aws.amazon.com/blogs/machine-learning/create-amazon-sagemaker-models-using-the-pytorch-model-zoo/#:~:text=The%20entry_point%20parameter%20points%20to,SageMaker%20Deep%20Learning%20Container%20image
