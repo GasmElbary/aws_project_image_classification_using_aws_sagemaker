@@ -1,15 +1,50 @@
 # Image Classification using AWS SageMaker
 
-Use AWS Sagemaker to train a pretrained model that can perform image classification by using the Sagemaker profiling, debugger, hyperparameter tuning and other good ML engineering practices. This can be done on either the provided dog breed classication data set or one of your choice.
+In this notebook, I fine-tuned the pre-trained model EfficientNet-B7 to use on the Intel Image Classification dataset. First, the tunning is run on the SageMaker training jobs to utilize the ml.g4dn.xlarge instance type. Meanwhile, I used the model profiler and debugger to analyze the generated model. Then I deploy the model and inference random image sets.
 
 ## Project Set Up and Installation
-Enter AWS through the gateway in the course and open SageMaker Studio. 
-Download the starter files.
-Download/Make the dataset available. 
+AWS Account
+
 
 ## Dataset
-The provided dataset is the dogbreed classification dataset which can be found in the classroom.
-The project is designed to be dataset independent so if there is a dataset that is more interesting or relevant to your work, you are welcome to use it to complete the project.
+The data set I'm using is the Intel Image Classification dataset available on (https://www.kaggle.com/datasets/puneet6060/intel-image-classification). This data set consists of images of natural scenes around the world under 6 categories:
+
+- Buildings
+- Forest
+- Glacier
+- Mountain
+- Sea
+- Street
+
+There are a total of 25k images of size 150x150, distributed between Train, Test, and Prediction files. where, 14k images are in Train, 3k in Test, and 7k in Prediction.
+
+The dataset file structure is like this
+
+```
+.   
+└───data
+    └───seg_train
+    │   │   
+    │   └───buildings
+    │   └───forest
+    │   └───glacier
+    │   └───mountain
+    │   └───sea
+    │   └───street
+    │
+    └───seg_test
+    │   │   
+    │   └───buildings
+    │   └───forest
+    │   └───glacier
+    │   └───mountain
+    │   └───sea
+    │   └───street
+    │
+    └───seg_pred
+
+```
+Each category is in a separate file.
 
 ### Access
 Upload the data to an S3 bucket through the AWS Gateway so that SageMaker has access to the data. 
