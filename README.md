@@ -75,18 +75,52 @@ The best parameters were:
 
 
 ## Debugging and Profiling
-**TODO**: Give an overview of how you performed model debugging and profiling in Sagemaker
+I set the debugger by creating a hook and setting it to record the loss criterion while training and evaluating.
+ 
+I set the debugger and profiler to monitor the following through Rules:
+- LossNotDecreasing
+- VanishingGradient
+- Overfitting
+- Overtraining
+- PoorWeightInitialization
+- LowGPUUtilization
+- ProfilerReport
+
 
 ### Results
-**TODO**: What are the results/insights did you get by profiling/debugging your model?
+I found that there are two issues
 
-**TODO** Remember to provide the profiler html/pdf file in your submission.
+![debprof.png](images/debprof.png)
+
+The debugging output shows that there is Overtraining issue. This can be fixed by changing the training\testing ratios or by adding an early stopping rule to stop the training when the problem occurs.
+
+There is also an issue with GPU utilization, which happens when GPU usage is low. Increasing the patch size will make the GPU more utilized. It is not a big problem as our images are small in size and resolution, and our GPU can do more.
+
+Moreover, looking at the training and validation loss, the training loss started at 1.8 but decreased rapidly and maintained an average of 0.6 over the next steps. Meanwhile, the validation loss started low and maintained an average of 0.6. The fact that the validation loss kept fluctuating around the same average indicates over-training.
+
+![eval_train_steps_loss.png](images/eval_train_steps_loss.png)
+
 
 
 ## Model Deployment
-**TODO**: Give an overview of the deployed model and instructions on how to query the endpoint with a sample input.
+For the training, since we have thousands of images, I used ml.g4dn.xlarge instance to utilize its GPU. However, when deploying the image, I used ml.t2.medium, as our images are small and don't require a lot of computation power for inferencing. On a bigger scale, for more customers, one would need to consider better options, but this is more than enough for testing.
 
-**TODO** Remember to provide a screenshot of the deployed active endpoint in Sagemaker.
+![endpoint.png](images/endpoint.png)
+
+Using the images in the seg_pred folder, I picked images at random and used the predicted model to classify them.
+
+![output1.png](images/output1.png)
+
+![output2.png](images/output2.png)
+
+To use the Predictor, we pass bytes of a JPEG image, and we get an array of loss values for the 6 different classes, where the indices can be interpreted as follows:
+
+0 -> buildings
+1 -> forest
+2 -> glacier
+3 -> mountain
+4 -> sea
+5 -> street
 
 ## References
 
