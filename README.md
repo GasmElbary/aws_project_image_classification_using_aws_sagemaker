@@ -2,8 +2,13 @@
 
 In this notebook, I fine-tuned the pre-trained model EfficientNet-B7 to use on the Intel Image Classification dataset. First, the tunning is run on the SageMaker training jobs to utilize the ml.g4dn.xlarge instance type. Meanwhile, I used the model profiler and debugger to analyze the generated model. Then I deploy the model and inference random image sets.
 
-## Project Set Up and Installation
-AWS Account
+## Project Set Up
+- AWS Account -> to use SageMaker services
+- [train_and_deploy.ipynb](train_and_deploy.ipynb) -> A jupyter notebook that organize our steps. Used to interact with the SageMaker services to tune, monitor, deploy, and test our model.
+- [hpo.py](code/hpo.py) -> A Python script that defines the hyperparameter configurations, data loading, and training and testing functions for the tuning job.
+- The Python script based on the `train_model.py` with added debugger monitoring. It is used for moel training with the optimal set of hyperparameters.
+- [train_model.py](code/train_model.py) -> A Python script contains the same as `hpo.py` codes, but with hooks defined for debugger monitoring.
+- [inference.py](inference.py) -> A Python script that overrides some of the deployed model's functions to tell it how to read and process the input images and predict the class.
 
 
 ## Dataset
@@ -117,12 +122,12 @@ Using the images in the seg_pred folder, I picked images at random and used the 
 
 To use the Predictor, we pass bytes of a JPEG image, and we get an array of loss values for the 6 different classes, where the indices can be interpreted as follows:
 
-0 -> buildings
-1 -> forest
-2 -> glacier
-3 -> mountain
-4 -> sea
-5 -> street
+- 0 -> buildings
+- 1 -> forest
+- 2 -> glacier
+- 3 -> mountain
+- 4 -> sea
+- 5 -> street
 
 ## References
 
